@@ -1,5 +1,5 @@
 apiVersion: networking.k8s.io/v1
-kind: ingress
+kind: Ingress
 metadata:
   name: ingress-srv
   annotations:
@@ -7,21 +7,21 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-  - host: acme.com
-    http:
-      paths:
-      - path: /api/platforms
-        pathType: Prefix
-        backend:
-          service:
-            name: platforms-clusterip-srv
-            port:
-              number: 80
-      - path: /api/c/platforms
-        pathType: Prefix
-        backend:
-          service:
-            name: commands-clusterip-srv
-            port:
-              number: 80
+    - host: acme.com
+      http:
+        paths:
+          - path: /api/platforms
+            pathType: Prefix
+            backend:
+              service:
+                name: platforms-clusterip-srv
+                port:
+                  number: 80
+          - path: /api/c/platforms
+            pathType: Prefix
+            backend:
+              service:
+                name: commands-clusterip-srv
+                port:
+                  number: 80
 
