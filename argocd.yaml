@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+  # Tracked repo
+  source:
+    repoURL: https://github.com/omarade/E3
+    # Last commit
+    targetRevision: HEAD
+    # K8S config folder
+    path: K8S
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: myapp
+
+  # Argocd policies
+  syncPolicy:
+    # Create destination namespace if it does not exist
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      # Automatic self-healing (undo manual changes to the cluster & resync with repo state)
+      selfHeal: true
+      # Automatic pruning (when a yaml file is deleted it will be deleted from the cluster as well)
+      prune: true
